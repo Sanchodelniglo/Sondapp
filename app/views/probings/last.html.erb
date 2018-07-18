@@ -1,0 +1,7 @@
+<h1>blablablabla</h1>
+<% @probings.each do |probing| %>
+  <%= probing.quantity %>
+  <%= probing.created_at %>
+<% end %>
+
+<%= link_to "+", new_probing_path %>
