@@ -1,8 +1,11 @@
 <% @probings.each do |probing| %>
+
   <%= probing.hydratation %>
   <%= probing.quantity %>
   <%= probing.quality %>
   <%= probing.fleed %>
+
+
 <% end %>
 
 <%= link_to "<< Back to last(6)", root_path %>

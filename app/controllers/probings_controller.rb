@@ -6,7 +6,7 @@ class ProbingsController < ApplicationController
   end
 
   def last
-    @probings = Probing.last(6)
+    @probings = Probing.where(user_id: current_user).last(6)
 
   end
 
