@@ -4,4 +4,7 @@
   <%= probing.created_at %>
 <% end %>
 
+<%= high_chart_globals(@chart_globals) %>
+<%= high_chart("some_id", @chart) %>
+
 <%= link_to "+", new_probing_path %>
