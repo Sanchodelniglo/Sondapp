@@ -1,10 +1,10 @@
-<h1>bloblobloblo</h1>
-<% @probings.each do |probing| %>
-  <%= probing.quantity %>
-  <%= probing.created_at %>
-<% end %>
 
-<%= high_chart_globals(@chart_globals) %>
-<%= high_chart("some_id", @chart) %>
+<div class="row">
+  <div class="col-xs-12">
+    <%= high_chart_globals(@chart_globals) %>
+    <%= high_chart("current_user", @chart) %>
+
+  </div>
+</div>
 
 <%= link_to "+", new_probing_path %>
