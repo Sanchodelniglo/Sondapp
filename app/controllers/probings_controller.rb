@@ -40,7 +40,7 @@ class ProbingsController < ApplicationController
         plotBorderWidth: 1
       )
       f.lang(thousandsSep: ",", numericSymbols: 'cl')
-      f.colors(["87e0ff", "#f7a35c", "#8085e9", "#f15c80", "#e4d354"])
+      f.colors(["#fff03", "#f7a35c", "#8085e9", "#f15c80", "#e4d354"])
       f.yAxis(labels: {format: "{value} cl"})
     end
 
