@@ -4,6 +4,7 @@
     <div class="col-xs-12">
       <%= high_chart_globals(@chart_globals) %>
       <%= high_chart("current_user", @chart) %>
+      <%= @probings.pluck(:quality) %>
 
     </div>
 

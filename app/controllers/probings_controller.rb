@@ -7,10 +7,14 @@ class ProbingsController < ApplicationController
 
   def last
 
-    @probings = Probing.where(user_id: current_user).last(6)
+    @probings = Probing.where(user_id: current_user)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: "Global Chart")
-      f.xAxis(categories: @probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y - %H:%M") })
+      f.xAxis(
+        categories: @probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y - %H:%M") },
+        plotBands: probing_quality(@probings)
+      )
+
       f.yAxis [
         {title: {text: "Volume in cl", margin: 10} },
         {title: {text: "Fleed"}, opposite: true}]
@@ -66,8 +70,14 @@ class ProbingsController < ApplicationController
     params.require(:probing).permit(:hydratation, :quantity, :quality, :fleed)
   end
 
-  def probing_quality(probing)
-
+  def probing_quality(probings)
+    plotBands = []
+    qualities = probings.pluck(:quality)
+    bad_indexes = qualities.each_index.select { |i| qualities[i] == "bad" }
+    bad_probings = bad_indexes.each do |bad_index|
+      plotBands << { color: 'rgba(163, 0, 100,0.5)', from: bad_index, to: bad_index + 1}
+    end
+    plotBands.flatten
   end
 
 end
