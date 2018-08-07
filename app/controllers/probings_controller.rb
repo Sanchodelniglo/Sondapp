@@ -11,18 +11,16 @@ class ProbingsController < ApplicationController
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: "Global Chart")
       f.xAxis(categories: @probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y - %H:%M") })
-
-      f.series(type: 'column', name: "Fleed", yAxis: 1, data: @probings.pluck(:fleed))
+      f.yAxis [
+        {title: {text: "Volume in cl", margin: 10} },
+        {title: {text: "Fleed"}, opposite: true}]
+      f.series(type: 'column', name: "Fleed", yAxis: 1, data: @probings.pluck(:fleed), maxPointWidth: 20)
       f.series(type: 'spline', name: "Hydratation", yAxis: 0, data: @probings.pluck(:hydratation))
       f.series(type: 'spline', name: "Quantity", yAxis: 0, data: @probings.pluck(:quantity))
 
 
-      f.yAxis [
-        {title: {text: "Volume in cl", margin: 70} },
-        {title: {text: "Fleed"}, opposite: true},
-      ]
 
-      f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
+      f.legend(align: 'center', verticalAlign: 'bottom', y: 0, x: 0, layout: 'horizontal')
       f.chart({defaultSeriesType: "column"})
     end
 
@@ -42,7 +40,7 @@ class ProbingsController < ApplicationController
         plotBorderWidth: 1
       )
       f.lang(thousandsSep: ",", numericSymbols: 'cl')
-      f.colors(["#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354"])
+      f.colors(["87e0ff", "#f7a35c", "#8085e9", "#f15c80", "#e4d354"])
       f.yAxis(labels: {format: "{value} cl"})
     end
 
@@ -66,6 +64,10 @@ class ProbingsController < ApplicationController
 
   def probing_params
     params.require(:probing).permit(:hydratation, :quantity, :quality, :fleed)
+  end
+
+  def probing_quality(probing)
+
   end
 
 end
