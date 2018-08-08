@@ -8,7 +8,7 @@ class ProbingsController < ApplicationController
   def last
 
     cookies[:date] = DateTime.now
-    @probings = Probing.where(user_id: current_user)
+    @probings = Probing.where(user_id: current_user).last(6)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: "Global Chart")
       f.xAxis(
