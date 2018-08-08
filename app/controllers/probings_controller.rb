@@ -10,18 +10,18 @@ class ProbingsController < ApplicationController
     cookies[:date] = DateTime.now
     @probings = Probing.where(user_id: current_user)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(text: "Global Chart")
+      f.title(text: "Ces dernières 24H")
       f.xAxis(
         categories: @probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y - %H:%M") },
         plotBands: probing_quality(@probings)
       )
 
       f.yAxis [
-        {title: {text: "Volume in cl", margin: 10} },
-        {title: {text: "Fleed"}, opposite: true}]
-      f.series(type: 'column', name: "Fleed", yAxis: 1, data: @probings.pluck(:fleed), maxPointWidth: 20)
-      f.series(type: 'spline', name: "Hydratation", yAxis: 0, data: @probings.pluck(:hydratation))
-      f.series(type: 'spline', name: "Quantity", yAxis: 0, data: @probings.pluck(:quantity))
+        {title: {text: "Volume en cl", margin: 10} },
+        {title: {text: "Fuites urinaire en cl"}, opposite: true}]
+      f.series(type: 'column', name: "Fuites", yAxis: 1, data: @probings.pluck(:fleed), maxPointWidth: 20)
+      f.series(type: 'spline', name: "Boisson", yAxis: 0, data: @probings.pluck(:hydratation))
+      f.series(type: 'spline', name: "Miction", yAxis: 0, data: @probings.pluck(:quantity))
 
 
 
@@ -40,13 +40,13 @@ class ProbingsController < ApplicationController
           ]
         },
         borderWidth: 2,
-        plotBackgroundColor: "rgba(255, 255, 255, .9)",
+        plotBackgroundColor: "white",
         plotShadow: true,
         plotBorderWidth: 1
       )
       f.lang(thousandsSep: ",", numericSymbols: 'cl')
-      f.colors(["#fff03", "#f7a35c", "#8085e9", "#f15c80", "#e4d354"])
-      f.yAxis(labels: {format: "{value} cl"})
+      f.colors(["#9feed1", "#53c7f0", "#f8c43a", "#fff6a2", "#e4d354"])
+      # f.yAxis(labels: {format: "{value} cl"})
     end
 
   end
@@ -75,7 +75,19 @@ class ProbingsController < ApplicationController
     qualities = probings.pluck(:quality)
     bad_indexes = qualities.each_index.select { |i| qualities[i] == "bad" }
     bad_probings = bad_indexes.map.with_index do |bad_index|
-     { color: 'rgba(163, 0, 100,0.5)', from: bad_index, to: bad_index.next}
+      {
+      color: '#FFA5A2',
+      from: bad_index,
+      to: bad_index.next,
+      label: {
+              text: "Infection urinaire",
+              align: 'center',
+              style: {
+                    color: 'white',
+                    fontWeight: 'bold'
+                }
+            }
+      }
     end
     bad_probings.flatten
   end
