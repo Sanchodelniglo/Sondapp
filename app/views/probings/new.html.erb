@@ -1,10 +1,13 @@
-<%= simple_form_for @probing do |f| %>
-  <%= f.input :hydratation %>
-  <%= f.input :quantity %>
-  <%= f.input :quality %>
-  <%= f.input :fleed %>
-  <%= f.button :submit %>
-<% end %>
 
+<div class="form">
+  <%= simple_form_for @probing do |f| %>
+    <%= f.input :hydratation, placeholder: "500 cl", inline_label:"hydratation" %>
+    <%= f.input :quantity, placeholder: "200 cl" %>
+    <%= f.input :quality, collection: ["good", "bad"] %>
+    <%= f.input :fleed, collection: 1..3 %>
+    <%= f.button :submit, class: "btn btn-success" %>
+  <% end %>
+</div>
 <%= link_to "<< Back to last(6)", root_path %>
+
 
