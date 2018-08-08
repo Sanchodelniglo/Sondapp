@@ -1,11 +1,22 @@
-<% @probings.each do |probing| %>
 
-  <%= probing.hydratation %>
-  <%= probing.quantity %>
-  <%= probing.quality %>
-  <%= probing.fleed %>
-
-
-<% end %>
+<div class="container-fluid">
+  <div class="row">
+  <% @probings.each do |probing| %>
+    <div class="col-md-2">
+      <div class="card" style="width: 15rem;">
+        <div class="card-title">
+          <%= probing.created_at.strftime("%d/%m/%Y - %H:%M") %>
+        </div>
+        <div class="card-body">
+          <p> hydratation:  <b><%= probing.hydratation %></b>cl  </p>
+          <p> quantity: <b><%= probing.quantity %></b>cl </p>
+          <p> quality: <b><%= probing.quality %></b> </p>
+          <p> fleed: <b><%= probing.fleed %></b> fleed </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>
 
 <%= link_to "<< Back to last(6)", root_path %>
