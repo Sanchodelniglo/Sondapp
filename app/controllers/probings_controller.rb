@@ -71,13 +71,12 @@ class ProbingsController < ApplicationController
   end
 
   def probing_quality(probings)
-    plotBands = []
     qualities = probings.pluck(:quality)
     bad_indexes = qualities.each_index.select { |i| qualities[i] == "bad" }
-    bad_probings = bad_indexes.each do |bad_index|
-      plotBands << { color: 'rgba(163, 0, 100,0.5)', from: bad_index, to: bad_index + 1}
+    bad_probings = bad_indexes.map.with_index do |bad_index|
+     { color: 'rgba(163, 0, 100,0.5)', from: bad_index, to: bad_index.next}
     end
-    plotBands.flatten
+    bad_probings.flatten
   end
 
 end
