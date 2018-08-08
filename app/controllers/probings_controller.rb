@@ -46,7 +46,6 @@ class ProbingsController < ApplicationController
       )
       f.lang(thousandsSep: ",", numericSymbols: 'cl')
       f.colors(["#fff03", "#f7a35c", "#8085e9", "#f15c80", "#e4d354"])
-      f.yAxis(labels: {format: "{value} cl"})
     end
 
   end
