@@ -1,0 +1,22 @@
+<h1>
+  <%= current_user.first_name || "first_name" %>
+  <%= current_user.last_name || "last_name" %>
+</h1>
+<hr>
+<h2>
+  <%= current_user.genre || "Sexe" %>
+  <br>
+  <%= current_user.age || "Age" %>
+  <br>
+  <%= current_user.pathology || "Pathology" %>
+</h2>
+<hr>
+<h3>
+  <%= current_user.phone_number || "phone_number"%>
+  <br>
+  <%= current_user.email || "email" %>
+</h3>
+<hr>
+<div class="pdf_chart">
+  <%= high_chart("current_user", @chart) %>
+</div>

@@ -20,6 +20,8 @@ gem 'webpacker'
 gem 'lazy_high_charts'
 gem 'jquery-rails'
 gem 'turbolinks'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 
 
 group :development do
