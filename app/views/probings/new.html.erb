@@ -4,7 +4,7 @@
     <%= f.input :hydratation, placeholder: "500 cl", inline_label:"hydratation" %>
     <%= f.input :quantity, placeholder: "200 cl" %>
     <%= f.input :quality, collection: ["good", "bad"] %>
-    <%= f.input :fleed, collection: 1..3 %>
+    <%= f.input :fleed, collection: 0..3 %>
     <%= f.button :submit, class: "btn btn-success" %>
   <% end %>
 </div>

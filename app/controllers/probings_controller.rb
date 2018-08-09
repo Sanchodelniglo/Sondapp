@@ -10,45 +10,50 @@ class ProbingsController < ApplicationController
     cookies[:date] = DateTime.now
     @probings = Probing.where(user_id: current_user).last(6)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(text: "Global Chart")
+      f.title(text: "du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.uniq.join(' au ')}")
       f.xAxis(
-        categories: @probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y - %H:%M") },
+        categories: @probings.pluck(:created_at).map { |date| date.strftime("%H:%M") },
         plotBands: probing_quality(@probings)
       )
 
       f.yAxis [
-        {title: {text: "Volume in cl", margin: 10} },
-        {title: {text: "Fleed"}, opposite: true}]
-      f.series(type: 'column', name: "Fleed", yAxis: 1, data: @probings.pluck(:fleed), maxPointWidth: 20)
-      f.series(type: 'spline', name: "Hydratation", yAxis: 0, data: @probings.pluck(:hydratation))
-      f.series(type: 'spline', name: "Quantity", yAxis: 0, data: @probings.pluck(:quantity))
+        {title: {text: "Volume en cl"} },
+        {title: {text: "Fuites urinaire en cl"}, opposite: true, allowDecimals: false}]
+      f.series(type: 'column', name: "Fuites", yAxis: 1, data: @probings.pluck(:fleed), maxPointWidth: 20)
+      f.series(type: 'spline', name: "Boisson", yAxis: 0, data: @probings.pluck(:hydratation))
+      f.series(type: 'spline', name: "Miction", yAxis: 0, data: @probings.pluck(:quantity))
 
 
 
       f.legend(align: 'center', verticalAlign: 'bottom', y: 0, x: 0, layout: 'horizontal')
-      f.chart({defaultSeriesType: "column"})
-    end
-
-    @chart_globals = LazyHighCharts::HighChartGlobals.new do |f|
+      f.export(:type=> 'image/pdf')
       f.global(useUTC: false)
       f.chart(
         backgroundColor: {
           linearGradient: [0, 0, 500, 500],
+          strokeWidth: 0,
           stops: [
             [0, "rgb(255, 255, 255)"],
             [1, "rgb(240, 240, 255)"]
           ]
         },
         borderWidth: 2,
-        plotBackgroundColor: "rgba(255, 255, 255, .9)",
+        plotBackgroundColor: "white",
         plotShadow: true,
-        plotBorderWidth: 1
+        plotBorderWidth: 0
       )
       f.lang(thousandsSep: ",", numericSymbols: 'cl')
-      f.colors(["#fff03", "#f7a35c", "#8085e9", "#f15c80", "#e4d354"])
-      f.yAxis(labels: {format: "{value} cl"})
+      f.colors(["#9feed1", "#53c7f0", "#f8c43a", "#fff6a2", "#e4d354"])
     end
+  end
 
+  def show
+    respond_to do |format|
+      format.html { render :show }
+      format.pdf {
+        render :pdf => "show", :layout => 'charts_pdf.html'
+        }
+    end
   end
 
   def new
@@ -75,7 +80,21 @@ class ProbingsController < ApplicationController
     qualities = probings.pluck(:quality)
     bad_indexes = qualities.each_index.select { |i| qualities[i] == "bad" }
     bad_probings = bad_indexes.map.with_index do |bad_index|
-     { color: 'rgba(163, 0, 100,0.5)', from: bad_index, to: bad_index.next}
+      {
+      color: '#FFA5A2',
+      from: bad_index,
+      to: bad_index.next,
+      label: {
+              text: "#{qualities[bad_index]}",
+              align: 'center',
+              rotation: 270,
+              textAlign: 'right',
+              style: {
+                    color: 'white',
+                    fontWeight: 'bold'
+                }
+            }
+      }
     end
     bad_probings.flatten
   end
