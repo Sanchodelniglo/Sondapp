@@ -21,6 +21,8 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'figaro'
 gem 'sendgrid-ruby'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
