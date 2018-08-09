@@ -1,18 +1,12 @@
 
 
-<div class="row">
-  <div id="bla"></div>
-  <div class="container-fluid" id="gps">
+<div class="container-fluid">
+  <div class="row">
     <p class="date"> <%= DateTime.now.strftime("Printed on %A %B %Y") %></p>
-    <div class="col-xs-12">
-      <%= high_chart_globals(@chart_globals) %>
-
       <%= high_chart("current_user", @chart) %>
-
     </div>
-  <%= link_to "+", new_probing_path %>
   </div>
+  <%= link_to "+", new_probing_path %>
 </div>
 
-<%= link_to "+", new_probing_path %>
 
