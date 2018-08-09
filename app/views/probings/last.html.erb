@@ -1,7 +1,8 @@
 
 <div class="row">
-  <div class="container-fluid">
-    <p class="date"> <%= cookies[:date].strftime("Printed on %A %B %Y") %></p>
+  <div id="bla"></div>
+  <div class="container-fluid" id="gps">
+    <p class="date"> <%= DateTime.now.strftime("Printed on %A %B %Y") %></p>
     <div class="col-xs-12">
       <%= high_chart_globals(@chart_globals) %>
       <%= high_chart("current_user", @chart) %>
@@ -9,6 +10,8 @@
     </div>
   </div>
 </div>
+
+
 
 
 
