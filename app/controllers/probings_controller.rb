@@ -18,7 +18,7 @@ class ProbingsController < ApplicationController
 
       f.yAxis [
         {title: {text: "Volume en cl"} },
-        {title: {text: "Fuites urinaire en cl"}, opposite: true}]
+        {title: {text: "Fuites urinaire en cl"}, opposite: true, allowDecimals: false}]
       f.series(type: 'column', name: "Fuites", yAxis: 1, data: @probings.pluck(:fleed), maxPointWidth: 20)
       f.series(type: 'spline', name: "Boisson", yAxis: 0, data: @probings.pluck(:hydratation))
       f.series(type: 'spline', name: "Miction", yAxis: 0, data: @probings.pluck(:quantity))
