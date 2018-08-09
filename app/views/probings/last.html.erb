@@ -1,13 +1,18 @@
 
-<div class="container-fluid">
-  <div class="row" style="height: 100vh;">
-    <p class="date"> <%= cookies[:date].strftime("Printed on %A %B %Y") %></p>
-    <div class="chart">
-      <%#= high_chart_globals(@chart_globals) %>
+
+<div class="row">
+  <div id="bla"></div>
+  <div class="container-fluid" id="gps">
+    <p class="date"> <%= DateTime.now.strftime("Printed on %A %B %Y") %></p>
+    <div class="col-xs-12">
+      <%= high_chart_globals(@chart_globals) %>
+
       <%= high_chart("current_user", @chart) %>
 
     </div>
   <%= link_to "+", new_probing_path %>
   </div>
 </div>
+
+<%= link_to "+", new_probing_path %>
 
