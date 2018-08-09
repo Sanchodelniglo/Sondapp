@@ -3,7 +3,6 @@ ruby '2.4.3'
 
 gem 'bootsnap', require: false
 gem 'devise'
-gem 'figaro'
 gem 'jbuilder', '~> 2.0'
 gem 'pg', '~> 0.21'
 gem 'puma'
@@ -20,12 +19,15 @@ gem 'webpacker'
 gem 'lazy_high_charts'
 gem 'jquery-rails'
 gem 'turbolinks'
+gem 'figaro'
+gem 'sendgrid-ruby'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 
-
 group :development do
   gem 'web-console', '>= 3.3.0'
+  gem "letter_opener"
+
 end
 
 group :development, :test do
