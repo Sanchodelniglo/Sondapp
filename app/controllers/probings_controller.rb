@@ -50,7 +50,7 @@ class ProbingsController < ApplicationController
   def show
 
     cookies[:date] = DateTime.now
-    @probings = Probing.where(user_id: current_user).last(6)
+    @probings = Probing.where(user_id: current_user)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: "du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.uniq.join(' au ')}")
       f.xAxis(
@@ -99,7 +99,7 @@ class ProbingsController < ApplicationController
     respond_to do |format|
       format.html { render :show }
       format.pdf {
-        render :pdf => "show", :layout => 'probings_pdf.html', javascript_delay: 3000
+        render :pdf => "show", :layout => 'probings_pdf.html'
         }
     end
   end
