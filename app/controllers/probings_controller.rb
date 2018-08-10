@@ -10,7 +10,7 @@ class ProbingsController < ApplicationController
     cookies[:date] = DateTime.now
     @probings = Probing.where(user_id: current_user).last(6)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(text: "du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.uniq.join(' au ')}")
+      f.title(text: "Sondages du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.minmax.join(' au ')}")
       f.xAxis(
         categories: @probings.pluck(:created_at).map { |date| date.strftime("%H:%M") },
         plotBands: probing_quality(@probings)
@@ -19,7 +19,7 @@ class ProbingsController < ApplicationController
       f.yAxis [
         {title: {text: "Volume en cl"} },
         {title: {text: "Fuites urinaire en cl"}, opposite: true, allowDecimals: false}]
-      f.series(type: 'column', name: "Fuites", yAxis: 1, data: @probings.pluck(:fleed), maxPointWidth: 20)
+      f.series(type: 'column', name: "Fuites", yAxis: 1, data: @probings.pluck(:fleed), maxPointWidth: 15)
       f.series(type: 'spline', name: "Boisson", yAxis: 0, data: @probings.pluck(:hydratation))
       f.series(type: 'spline', name: "Miction", yAxis: 0, data: @probings.pluck(:quantity))
 
@@ -50,9 +50,9 @@ class ProbingsController < ApplicationController
   def show
 
     cookies[:date] = DateTime.now
-    @probings = Probing.where(user_id: current_user).last(6)
+    @probings = Probing.where(user_id: current_user)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(text: "du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.uniq.join(' au ')}")
+      f.title(text: "Sondages du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.minmax.join(' au ')}")
       f.xAxis(
         categories: @probings.pluck(:created_at).map { |date| date.strftime("%H:%M") },
         plotBands: probing_quality(@probings)
@@ -76,9 +76,9 @@ class ProbingsController < ApplicationController
       )
 
       f.yAxis [
-        {title: {text: "Volume en cl"} },
+        {title: {text: "Volume en ml"} },
         {title: {text: "Fuites urinaire en cl"}, opposite: true, allowDecimals: false}]
-      f.series(type: 'column', name: "Fuites", yAxis: 1, data: @probings.pluck(:fleed), maxPointWidth: 20,enableMouseTracking: false,
+      f.series(type: 'column', name: "Fuites", yAxis: 1, data: @probings.pluck(:fleed), maxPointWidth: 15,enableMouseTracking: false,
             shadow: false,
             animation: false)
       f.series(type: 'spline', name: "Boisson", yAxis: 0, data: @probings.pluck(:hydratation),enableMouseTracking: false,
@@ -99,7 +99,7 @@ class ProbingsController < ApplicationController
     respond_to do |format|
       format.html { render :show }
       format.pdf {
-        render :pdf => "show", :layout => 'probings_pdf.html', javascript_delay: 3000
+        render :pdf => "show", :layout => 'probings_pdf.html'
         }
     end
   end
