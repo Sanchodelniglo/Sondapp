@@ -5,6 +5,7 @@
     <%= f.input :quantity, placeholder: "200 cl" %>
     <%= f.input :quality, collection: ["good", "bad"] %>
     <%= f.input :fleed, collection: 0..3 %>
+    <%= f.input :collect_methode, collection: ["auto-sondage", "normale"] %>
     <%= f.button :submit, class: "btn btn-success" %>
   <% end %>
 </div>

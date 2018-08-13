@@ -49,7 +49,7 @@ puts "Creating Probings"
     hydratation: %w(100 200 300 400 500 600 700 800 1000 1100 1200).sample.to_i,
     quality: %w(good bad).sample,
     fleed: rand(0..4),
-    collect_methode: %w(auto-sondage normal).sample
+    collect_methode: Probing.where(:user_id == romain.id) ? "auto-sondage" : "normale"
     )
 end
 10.times do
