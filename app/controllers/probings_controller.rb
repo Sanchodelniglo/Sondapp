@@ -10,7 +10,7 @@ class ProbingsController < ApplicationController
     cookies[:date] = DateTime.now
     @probings = Probing.where(user_id: current_user).last(60)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(text: "Sondages du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.minmax.join(' au ')} - Collecte: #{@probings.pluck(:collect_methode).uniq.join}")
+      f.title(text: "Mictions du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.minmax.join(' au ')} - Collecte: #{@probings.pluck(:collect_methode).uniq.join}")
       f.xAxis(
         categories: @probings.pluck(:created_at).map { |date| date.strftime("%H:%M") },
         plotBands: probing_quality(@probings)
@@ -126,7 +126,7 @@ class ProbingsController < ApplicationController
 
   def probing_quality(probings)
     qualities = probings.pluck(:quality)
-    bad_indexes = qualities.each_index.select { |i| qualities[i] == "bad" }
+    bad_indexes = qualities.each_index.select { |i| qualities[i] == "Infection" }
     bad_probings = bad_indexes.map.with_index do |bad_index|
       {
       color: '#FFA5A2',

@@ -47,7 +47,7 @@ puts "Creating Probings"
     user_id: [romain.id, charles_henri.id].sample,
     quantity: %w(100 200 300 400 500 600 700 800 1000).sample.to_i,
     hydratation: %w(100 200 300 400 500 600 700 800 1000 1100 1200).sample.to_i,
-    quality: %w(good bad).sample,
+    quality: %w(R-A-S Infection).sample,
     fleed: rand(0..4),
     collect_methode: Probing.where(:user_id == romain.id) ? "auto-sondage" : "normale"
     )
