@@ -103,7 +103,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     :user_name => ENV['SENDGRID_USERNAME'],
     :password => ENV['SENDGRID_PASSWORD'],
-    :api_key => ENV['SENDGRID_API_KEY']
+    :api_key => ENV['SENDGRID_API_KEY'],
     :domain => 'www.sondapp.com',
     :address => 'smtp.sendgrid.net',
     :port => 587,
