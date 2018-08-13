@@ -6,7 +6,7 @@ Probing.destroy_all
 User.destroy_all
 10.times do
   print "."
-  sleep(0.5)
+  sleep(0.2)
 end
 puts "."
 
@@ -15,7 +15,7 @@ sleep(1)
 puts "Creating Romain & Charles-Henri"
 10.times do
   print "."
-  sleep(0.5)
+  sleep(0.2)
 end
 puts "."
 romain = User.create!(
@@ -54,14 +54,14 @@ puts "Creating Probings"
 end
 10.times do
   print "."
-  sleep(0.5)
+  sleep(0.2)
 end
 puts "."
 puts "Probings Created"
 puts "Wait For It"
 10.times do
   print "."
-  sleep(0.5)
+  sleep(0.2)
 end
 puts"."
 puts "Seeding Finished Mother F*cker!!"
