@@ -1,9 +1,9 @@
 
 <div class="form">
   <%= simple_form_for @probing do |f| %>
-    <%= f.input :hydratation, placeholder: "500 cl", inline_label:"hydratation" %>
-    <%= f.input :quantity, placeholder: "200 cl" %>
-    <%= f.input :quality, collection: ["good", "bad"] %>
+    <%= f.input :hydratation, placeholder: "500 ml", inline_label:"hydratation" %>
+    <%= f.input :quantity, placeholder: "200 mll" %>
+    <%= f.input :quality, collection: ["R-A-S", "Infection"] %>
     <%= f.input :fleed, collection: 0..3 %>
     <%= f.input :collect_methode, collection: ["auto-sondage", "normale"] %>
     <%= f.button :submit, class: "btn btn-success" %>
