@@ -95,7 +95,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: "sond-app.herokuapp.com" }
+  config.action_mailer.default_url_options = { host: "sond-app.herokuapp.com", port: 80 }
 
   # Setup the mailer config
   config.action_mailer.delivery_method = :smtp
