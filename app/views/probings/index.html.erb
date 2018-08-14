@@ -1,23 +1,80 @@
 
 <div class="container-fluid">
+<h1 class="text-center">Bienvenue sur Sond-app</h1>
   <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="card">
+        <div class="card-title">
+          <h3>Au total vous avez uriné <%= @probings.pluck(:quantity).reduce(:+).fdiv(1000) %> Litres</h3>
+        </div>
+        <div class="card-body">
+          <p>En moyenne : <b> <%= @probings.pluck(:quantity).reduce(:+) / @probings.pluck(:quantity).count %></b> ml</p>
+          <p> Au max:<b><%= @probings.pluck(:quantity).max %></b> ml</p>
+          <p> Au min :<b><%= @probings.pluck(:quantity).min %></b> ml</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="card">
+        <div class="card-title">
+          <h3>Au total vous avez bu <%= @probings.pluck(:hydratation).reduce(:+).fdiv(1000) %> Litres </h3>
+        </div>
+        <div class="card-body">
+          <p>En moyenne : <b> <%= @probings.pluck(:hydratation).reduce(:+) / @probings.pluck(:hydratation).count %></b> ml</p>
+          <p> Au max:<b><%= @probings.pluck(:hydratation).max %></b> ml</p>
+          <p> Au min :<b><%= @probings.pluck(:hydratation).min %></b> ml</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="card">
+        <div class="card-title">
+          <h3>Au total vous avez perdu <%= @probings.pluck(:fleed).reduce(:+).fdiv(100) %> Litres </h3>
+        </div>
+        <div class="card-body">
+          <p>En moyenne : <b> <%= @probings.pluck(:fleed).reduce(:+) / @probings.pluck(:fleed).count %></b> cl</p>
+          <p> Au max:<b><%= @probings.pluck(:fleed).max %></b> cl</p>
+          <p> Au min :<b><%= @probings.pluck(:fleed).min %></b> cl</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="card">
+        <div class="card-title">
+          <h3>Vous avez utilisé Sond-app <%= @probings.pluck(:quality).count / 6 %> jours</h3>
+        </div>
+        <div class="card-body">
+          <p><b><%= @probings.pluck(:quality).count("Infection") / 6 %></b> jours d'infection urinaire</p>
+          <p><b><%= @probings.pluck(:quality).count("R-A-S") / 6 %></b> jours sans soucis</p>
+          <p><b><%= @probings.pluck(:quality).count("R-A-S") > @probings.pluck(:quality).count("Infection") ? "continuez comme ça" : "Courage" %></b> !!</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- <div class="row">
   <% @probings.each do |probing| %>
-    <div class="col-md-2">
-      <div class="card" style="width: 15rem;">
+    <div class="col-xs-12 col-md-2">
+      <div class="card">
         <div class="card-title">
           <%= probing.created_at.strftime("%d/%m/%Y - %H:%M")%>
         </div>
         <div class="card-body">
-          <p> hydratation:  <b><%= probing.hydratation %></b>cl  </p>
-          <p> quantity: <b><%= probing.quantity %></b>cl </p>
+          <p> hydratation: <b><%= probing.hydratation %></b>ml</p>
+          <p> quantity: <b><%= probing.quantity %></b>ml</p>
           <p> quality: <b><%= probing.quality %></b> </p>
-          <p> fleed: <b><%= probing.fleed %></b> fleed </p>
+          <p> fleed: <b><%= probing.fleed %></b>cl</p>
         </div>
       </div>
     </div>
   <% end %>
   </div>
-</div>
+</div> -->
 
 <%= link_to "<< Back to last(6)", root_path %>
 

@@ -2,7 +2,8 @@ class ProbingsController < ApplicationController
 
 
   def index
-    @probings = Probing.all
+    @user = current_user
+    @probings = Probing.where(:user_id == current_user.id)
   end
 
   def last
