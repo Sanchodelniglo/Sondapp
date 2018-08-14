@@ -9,17 +9,18 @@ class ProbingsController < ApplicationController
   def last
 
     cookies[:date] = DateTime.now
-    @probings = Probing.where(user_id: current_user).last(12)
+    @probings = Probing.where(user_id: current_user).ast(42)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: "Mictions du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.minmax.join(' au ')} - Collecte: #{@probings.pluck(:collect_methode).uniq.join}")
       f.xAxis(
         categories: @probings.pluck(:created_at).map { |date| date.strftime("%H:%M") },
-        plotBands: probing_quality(@probings)
+        plotBands: probing_quality(@probings),
+        reversed: false
       )
-
       f.yAxis [
         {title: {text: "Volume en cl"} },
-        {title: {text: "Fuites urinaire en cl"}, opposite: true, allowDecimals: false}]
+        {title: {text: "Fuites urinaire en cl"}, opposite: true, allowDecimals: false}
+      ]
       f.series(type: 'column', name: "Fuites", yAxis: 1, data: @probings.pluck(:fleed), maxPointWidth: 15)
       f.series(type: 'spline', name: "Boisson", yAxis: 0, data: @probings.pluck(:hydratation))
       f.series(type: 'spline', name: "Miction", yAxis: 0, data: @probings.pluck(:quantity))
@@ -30,6 +31,10 @@ class ProbingsController < ApplicationController
       f.export(:type=> 'image/pdf')
       f.global(useUTC: false)
       f.chart(
+        scrollablePlotArea: {
+            minWidth: 1900,
+            scrollPositionX: 1
+        },
         backgroundColor: {
           linearGradient: [0, 0, 500, 500],
           strokeWidth: 0,
@@ -38,10 +43,7 @@ class ProbingsController < ApplicationController
             [1, "rgb(240, 240, 255)"]
           ]
         },
-        borderWidth: 2,
-        plotBackgroundColor: "white",
-        plotShadow: true,
-        plotBorderWidth: 0
+
       )
       f.lang(thousandsSep: ",", numericSymbols: 'cl')
       f.colors(["#9feed1", "#53c7f0", "#f8c43a", "#fff6a2", "#e4d354"])
@@ -51,30 +53,31 @@ class ProbingsController < ApplicationController
   def pdf_download
 
     cookies[:date] = DateTime.now
-    @probings = Probing.where(user_id: current_user).last(12)
+    @probings = Probing.where(user_id: current_user).last(30)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: "Mictions du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.minmax.join(' au ')} - Collecte: #{@probings.pluck(:collect_methode).uniq.join}")
       f.xAxis(
         categories: @probings.pluck(:created_at).map { |date| date.strftime("%H:%M") },
-        plotBands: probing_quality(@probings)
+        plotBands: probing_quality(@probings),
+        reversed: false
       )
-      f.chart(
-        backgroundColor: {
-          linearGradient: [0, 0, 500, 500],
-          strokeWidth: 0,
-          stops: [
-            [0, "rgb(255, 255, 255)"],
-            [1, "rgb(240, 240, 255)"]
-          ]
-        },
-        borderWidth: 2,
-        plotBackgroundColor: "white",
-        plotShadow: true,
-        plotBorderWidth: 0,
-        animation: false,
-        enableMouseTracking: false,
-        shadow: false,
-      )
+      # f.chart(
+      #   backgroundColor: {
+      #     linearGradient: [0, 0, 500, 500],
+      #     strokeWidth: 0,
+      #     stops: [
+      #       [0, "rgb(255, 255, 255)"],
+      #       [1, "rgb(240, 240, 255)"]
+      #     ]
+      #   },
+      #   borderWidth: 2,
+      #   plotBackgroundColor: "white",
+      #   plotShadow: true,
+      #   plotBorderWidth: 0,
+      #   animation: false,
+      #   enableMouseTracking: false,
+      #   shadow: false,
+      # )
 
       f.yAxis [
         {title: {text: "Volume en ml"} },
