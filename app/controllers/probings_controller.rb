@@ -32,7 +32,7 @@ class ProbingsController < ApplicationController
       f.global(useUTC: false)
       f.chart(
         scrollablePlotArea: {
-            minWidth: 1900,
+            minWidth: 1800,
             scrollPositionX: 1
         },
         backgroundColor: {
