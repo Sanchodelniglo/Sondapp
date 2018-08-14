@@ -105,6 +105,7 @@ Rails.application.configure do
     :password => ENV['SENDGRID_PASSWORD'],
     :domain => 'sondapp.com',
     :address => 'smtp.sendgrid.net',
+    api_key: ENV['SENDGRID_API_KEY'],
     :port => 587,
     :authentication => :plain,
     :enable_starttls_auto => true
