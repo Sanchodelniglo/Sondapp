@@ -1,12 +1,41 @@
 
+<%= stylesheet_link_tag "/Users/poniard/code/sondapp/sondapp/app/assets/stylesheets/welcome_mail.css" %>
 
-<p>Hi <%= @user.first_name %>,</p>
+<div class="wrapper">
+    <div class="container-fluid">
+        <div class="banner">
+            <h1> SONDAPP </h1>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="mail-title">
+        <%= image_tag "/Users/poniard/code/sondapp/sondapp/app/assets/images/charles.jpg", class:"avatar" %>
+        <h2>Hi <%= @user.first_name %>,</h2> 
+    </div>
+    <section class="mail-content">
+        <p><b>Bienvenue sur notre application !</b></p> 
 
-<p class="mail" >Bienvenue sur notre application !</p>
+        <p>Merci de nous rejoindre, voici un rapide guide pour utiliser notre application</p>
 
-<p>Merci de rejoindre voici un rapide guide pour utiliser notre application</p>
+        <h4>Miction</h4>
+        <p>lorem</p>
 
-<p>lorem</p>
+        <h4>Probing</h4>
+        <p> lorem  <p>
 
-<%= link_to "Le site", probings_url, target: "_blank", class:"btn btn-success" %>
-<p>See ya!</p>
+        <h4>Profile</h4>
+        <p> lorem <p>
+
+        <p> Rajouter mon premier probing </p>
+        <div class= "mail-link">
+            <%= link_to "probing", probings_url, target: "_blank", class:"btn btn-success" %>
+        </div>
+        <p>Bonne découverte !</p>
+    </section>
+</div>
+    
+
+
+
+
