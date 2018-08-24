@@ -13,7 +13,7 @@ class ProbingsController < ApplicationController
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: "Mictions du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.minmax.join(' au ')} - Collecte: #{@probings.pluck(:collect_methode).uniq.join}")
       f.xAxis(
-        categories: @probings.pluck(:created_at).map { |date| date.strftime("%H:%M") },
+        categories: @probings.pluck(:created_at).map { |date| date.strftime("%d/%m-%H:%M") },
         plotBands: probing_quality(@probings),
         reversed: false
       )
@@ -32,7 +32,7 @@ class ProbingsController < ApplicationController
       f.global(useUTC: false)
       f.chart(
         scrollablePlotArea: {
-            minWidth: 1800,
+            minWidth: 1000,
             scrollPositionX: 1
         },
         backgroundColor: {
@@ -53,7 +53,7 @@ class ProbingsController < ApplicationController
   def pdf_download
 
     cookies[:date] = DateTime.now
-    @probings = Probing.where(user_id: current_user).last(30)
+    @probings = Probing.where(user_id: current_user).last(42)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: "Mictions du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.minmax.join(' au ')} - Collecte: #{@probings.pluck(:collect_methode).uniq.join}")
       f.xAxis(
@@ -103,7 +103,7 @@ class ProbingsController < ApplicationController
     respond_to do |format|
       format.html { render :show }
       format.pdf {
-        render :pdf => "graphique", :layout => 'probings_pdf.html'
+        render :pdf => "graphique", :layout => 'probings_pdf.html', orientation: 'landscape'
         }
     end
   end
