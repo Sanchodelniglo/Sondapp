@@ -1,0 +1,19 @@
+.container-fluid {
+  height: calc(100vh - 70px);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .links {
+    display: flex;
+    justify-content: space-around;
+
+    a {
+      text-decoration: none;
+      color: rgb(96, 101, 102);
+      font-weight: light;
+    }
+  }
+
+}

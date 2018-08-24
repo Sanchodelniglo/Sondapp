@@ -33,15 +33,15 @@ class ProbingsController < ApplicationController
       f.chart(
         scrollablePlotArea: {
             minWidth: 1000,
-            scrollPositionX: 1
-        },
-        backgroundColor: {
-          linearGradient: [0, 0, 500, 500],
-          strokeWidth: 0,
-          stops: [
-            [0, "rgb(255, 255, 255)"],
-            [1, "rgb(240, 240, 255)"]
-          ]
+            scrollPositionX: 2
+        # },
+        # backgroundColor: {
+        #   linearGradient: [0, 0, 500, 500],
+        #   strokeWidth: 0,
+        #   stops: [
+        #     [0, "rgb(255, 255, 255)"],
+        #     [1, "rgb(240, 240, 255)"]
+        #   ]
         },
 
       )
