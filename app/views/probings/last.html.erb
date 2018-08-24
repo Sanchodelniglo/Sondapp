@@ -1,12 +1,10 @@
-
-
 <div class="container-fluid">
-  <div class="row">
-      <%= high_chart("current_user", @chart) %>
-    </div>
+  <div class="chart">
+    <%= high_chart("current_user", @chart) %>
   </div>
-  <%= link_to "➕ Add a probing", new_probing_path %>
+  <div class="links">
+    <%= link_to "➕ Ajouter un sondage", new_probing_path %>
+    <%= link_to "📄 Télécharger PDF", pdf_path, target: '_blank' %>
+  </div>
 </div>
-<br>
-<%= link_to "📄 Download PDF", pdf_path, target: 'blank' %>
 
