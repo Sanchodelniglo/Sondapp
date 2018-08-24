@@ -2,7 +2,7 @@
 //= require jquery_ujs
 //= require rails-ujs
 
-//= require turbolinks
+
 
 //= require highcharts/highcharts
 //= require highcharts/highcharts-more

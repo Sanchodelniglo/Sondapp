@@ -9,13 +9,13 @@ class ProbingsController < ApplicationController
   def last
 
     cookies[:date] = DateTime.now
-    @probings = Probing.where(user_id: current_user).last(42)
+    @probings = Probing.where(user_id: current_user)
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: "Mictions du #{@probings.pluck(:created_at).map { |date| date.strftime("%d/%m/%Y") }.minmax.join(' au ')} - Collecte: #{@probings.pluck(:collect_methode).uniq.join}")
       f.xAxis(
         categories: @probings.pluck(:created_at).map { |date| date.strftime("%d/%m-%H:%M") },
         plotBands: probing_quality(@probings),
-        reversed: false
+        reversed: false,
       )
       f.yAxis [
         {title: {text: "Volume en cl"} },
@@ -61,23 +61,6 @@ class ProbingsController < ApplicationController
         plotBands: probing_quality(@probings),
         reversed: false
       )
-      # f.chart(
-      #   backgroundColor: {
-      #     linearGradient: [0, 0, 500, 500],
-      #     strokeWidth: 0,
-      #     stops: [
-      #       [0, "rgb(255, 255, 255)"],
-      #       [1, "rgb(240, 240, 255)"]
-      #     ]
-      #   },
-      #   borderWidth: 2,
-      #   plotBackgroundColor: "white",
-      #   plotShadow: true,
-      #   plotBorderWidth: 0,
-      #   animation: false,
-      #   enableMouseTracking: false,
-      #   shadow: false,
-      # )
 
       f.yAxis [
         {title: {text: "Volume en ml"} },
@@ -101,7 +84,7 @@ class ProbingsController < ApplicationController
       f.colors(["#9feed1", "#53c7f0", "#f8c43a", "#fff6a2", "#e4d354"])
     end
     respond_to do |format|
-      format.html { render :show }
+      format.html { render :pdf_download }
       format.pdf {
         render :pdf => "graphique", :layout => 'probings_pdf.html', orientation: 'landscape'
         }
